@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Post in detail</title>
+    <style>
+      h1 {
+        color: brown;
+      }
+      .post {
+        background-color: beige;
+      }
+      h3 {
+        font-style: italic;
+      }
+      h4 {
+        color: blue;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>Here is your post</h2>
+    <p>Post id: <%= post.id %></p>
+    <div class="post">
+      <h3>username @<%= post.username %></h3>
+      <h4><%= post.content %></h4>
+    </div>
+  </body>
+</html>
