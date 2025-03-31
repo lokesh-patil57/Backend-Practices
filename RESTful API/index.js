@@ -3,8 +3,10 @@ const app = express();
 const port = 8080;
 const path = require("path");
 const { v4: uuidv4 } = require("uuid");
+const methodOverride = require("method-override")
 
 app.use(express.urlencoded({ extended: true }));
+app.use(methodOverride('_method'))
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
@@ -45,24 +47,11 @@ app.get("/posts/:id", (req, res) => {
 
 app.patch("/posts/:id", (req, res) => {
   let { id } = req.params;
-  let newCont = req.body.content;
-
-  // Check if content is present in the request body
-  if (!newCont) {
-    return res.status(400).send({ error: "Content is required!" });
-  }
-
-  // Find the post by ID
+  let newContent = req.body.content;
   let post = posts.find((p) => p.id === id);
-
-  if (!post) {
-    return res.status(404).send({ error: "Post not found!" });
-  }
-
-  // Update content and log the updated post
-  post.content = newCont;
+  post.content = newContent;
   console.log(post);
-  res.send("Post updated successfully!");
+  res.redirect("/posts");
 });
 
 app.get("/posts/:id/edit", (req, res) => {
