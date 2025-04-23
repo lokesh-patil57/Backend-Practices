@@ -10,12 +10,12 @@ const connection = mysql.createConnection({
 
 let q = "INSERT INTO user ( id , username, email ,password ) values ?";
 let users = [
-  [ 1 , "lokesh" , "loki@gmail.com" , "Lok22as++"]
-  [ 2 , "bhavesh" , "burda@gmail.com" , "bhavesh729"]
+  [ 1 , "lokesh" , "loki@gmail.com" , "Lok22as++"],
+  [ 2 , "bhavesh" , "burda@gmail.com" , "bhavesh729"],
 ]; 
 
 try {
-    connection.query("SHOW TABLES", (err, result ) =>{
+    connection.query(q, [users], (err, result ) =>{
             if (err) throw err
             console.log(result);
             console.log(result.length);
