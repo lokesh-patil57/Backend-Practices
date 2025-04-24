@@ -22,7 +22,17 @@ let getRandomUser = () => {
 
 
 app.get( "/" , (req , res)=>{
-  res.send("welcome to home page")
+    let q = "select count(*) from user";
+      try {
+        connection.query(q,(err, result) => {
+            if (err) throw err
+              console.log(result);
+            res.send(result)
+      }); 
+    }catch (err) {
+      console.log(err);
+      console.log(`Some error in DB`);
+    }
 })
 
 app.listen ("8080" , ()=> {
