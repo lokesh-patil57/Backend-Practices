@@ -26,8 +26,8 @@ app.get( "/" , (req , res)=>{
       try {
         connection.query(q,(err, result) => {
             if (err) throw err
-              console.log(result);
-            res.send(result)
+              console.log(result[0]["count(*)"]);
+            res.send("Sucess")
       }); 
     }catch (err) {
       console.log(err);
