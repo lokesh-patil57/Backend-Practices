@@ -2,6 +2,10 @@ const { faker } = require("@faker-js/faker");
 const mysql = require("mysql2");
 const express = require("express")
 const app = express()
+const path = require("path")
+
+app.set("view engine" , "ejs")
+app.use("views", path.join(_dirname, "/views") )
 
 const connection = mysql.createConnection({
   host: "localhost",
