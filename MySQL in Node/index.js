@@ -76,12 +76,16 @@ app.get("/user/:id/edit", (req , res )=> {
 //Update Route
 app.patch("/user/:id" , (req, res)=>{
   let { id } = req.params;
+  let { password : formPass , username : newUsername } = req.body
   let q = `SELECT *FROM user WHERE id='${id}'` 
   try {
     connection.query(q, (err, result) => {
       if (err) throw err;
+      console.log(result);
       let u = result[0]
-      console.log(u);
+      if(formPass != u.password){
+        res.send("WRONG Password")
+      }
       res.send(u)
     });
   } catch (err) {
