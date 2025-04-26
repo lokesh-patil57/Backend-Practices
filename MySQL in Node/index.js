@@ -75,7 +75,19 @@ app.get("/user/:id/edit", (req , res )=> {
 
 //Update Route
 app.patch("/user/:id" , (req, res)=>{
-  res.send("updated")
+  let { id } = req.params;
+  let q = `SELECT *FROM user WHERE id='${id}'` 
+  try {
+    connection.query(q, (err, result) => {
+      if (err) throw err;
+      let u = result[0]
+      console.log(u);
+      res.send(u)
+    });
+  } catch (err) {
+    console.log(err);
+    console.log(`Some error in DB`);
+  }
 })
 
 app.listen("8080", () => {
