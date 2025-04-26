@@ -42,10 +42,10 @@ app.get("/", (req, res) => {
 app.get("/user", (req, res) => {
   let q = "SELECT *FROM user"
   try {
-    connection.query(q, (err, result) => {
+    connection.query(q, (err, users) => {
       if (err) throw err;
-      console.log(result);
-      res.send(result)
+      // console.log(result);
+      res.render("user.ejs" ,{users})
     });
   } catch (err) {
     console.log(err);
@@ -57,3 +57,6 @@ app.listen("8080", () => {
   console.log(`app is listening on port 8080`);
   console.log(`http://localhost:8080`);
 });
+
+
+
