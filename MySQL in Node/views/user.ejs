@@ -19,11 +19,11 @@
         </tr>
         <% for (const user of users) { %>
             <tr>
-                <td><%= user.uid %></td>
+                <td><%= user.id %></td>
                 <td><%= user.email %></td>
                 <td><%= user.username %></td>
                 <td>
-                    <form method="get" action="/user/<%= user.uid %>/edit">
+                    <form method="get" action="/user/<%= user.id %>/edit">
                         <button>edit username</button>
                     </form>
                 </td>
