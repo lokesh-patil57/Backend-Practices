@@ -53,6 +53,24 @@ app.get("/user", (req, res) => {
   }
 });
 
+// Edit Route
+app.get("/user/:id/edit", (req , res )=> {
+  let { id } = req.params;
+  let q = `SELECT *FROM user WHERE uid='${id}'` 
+  try {
+    connection.query(q, (err, result) => {
+      if (err) throw err;
+      console.log(result);
+      let u = result[0]
+      
+      res.render("edit.ejs" ,{u})
+    });
+  } catch (err) {
+    console.log(err);
+    console.log(`Some error in DB`);
+  }
+})
+
 app.listen("8080", () => {
   console.log(`app is listening on port 8080`);
   console.log(`http://localhost:8080`);
