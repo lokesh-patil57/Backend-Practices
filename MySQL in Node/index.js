@@ -85,8 +85,13 @@ app.patch("/user/:id" , (req, res)=>{
       let u = result[0]
       if(formPass != u.password){
         res.send("WRONG Password")
+      } else{
+        let q2 = `UPDATE user SET username='${newUsername}' WHERE id='${id}'`
+        connection.query(q2 , (err , result) =>{
+          if (err) throw err;
+          res.send(result)
+        })
       }
-      res.send(u)
     });
   } catch (err) {
     console.log(err);
