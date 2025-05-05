@@ -8,6 +8,7 @@ const Chat = require("./models/chat.js")
 app.set("views", path.join(__dirname, "views") )
 app.set("view engine", "ejs")
 app.use(express.static(path.join(__dirname , "public")))
+app.use(express.urlencoded({extended : true}))
 
 main()
 .then(()=>{
@@ -23,6 +24,19 @@ async function main() {
 //new route
 app.get("/chats/new" , (req ,res)=>{
     res.render("newChat.ejs")
+})
+
+app.post("/chats", (req, res) =>{
+    let {from , to , msg} = req.body
+    let newChat = new Chat({
+        from : from,
+        to : to,
+        msg : msg,
+        created_at : new Date(),
+    })
+    console.log(newChat);
+    res.send("working")
+    
 })
 
 app.get ("/chats", async (req, res) =>{
