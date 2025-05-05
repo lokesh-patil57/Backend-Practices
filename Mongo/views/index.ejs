@@ -7,12 +7,12 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <h3 style="text-align: center " >All Chats!</h3>
+    <h3 style="text-align: center">All Chats!</h3>
     <form method="get" action="/chats/new">
       <button>New Chat</button>
     </form>
     <br />
-    <div style="text-align: center;">
+    <div style="text-align: center">
       <%for (let chat of chats){%>
       <div class="chat">
         <div class="from">
@@ -26,10 +26,20 @@
           <p>Received by <i><%=chat.to%></i></p>
         </div>
         <hr />
-        <p><%= chat.created_at.toString().split(" ")[4] %></p>
-        <p>
-          <%= chat.created_at.toString().split(" ").slice(0 , 4).join(" ") %>
-        </p>
+        <div style="text-align: left">
+          <p><%= chat.created_at.toString().split(" ")[4] %></p>
+          <p>
+            <%= chat.created_at.toString().split(" ").slice(0 , 4).join(" ") %>
+          </p>
+        </div>
+        <div class="btn">
+          <form method="get" action="/chats/<%= chat.id %>/edit">
+            <button>Edit Message</button>
+          </form>
+          <form action="/chats/<%= chat._id%>?_method=DELETE" name="del">
+            <button>Delete Chat</button>
+          </form>
+        </div>
       </div>
       <br /><br />
       <%}%>
