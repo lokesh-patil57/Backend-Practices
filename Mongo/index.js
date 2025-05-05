@@ -20,6 +20,11 @@ async function main() {
   await mongoose.connect('mongodb://127.0.0.1:27017/whatsapp');
 }
 
+//new route
+app.get("/chats/new" , (req ,res)=>{
+    res.render("newChat.ejs")
+})
+
 app.get ("/chats", async (req, res) =>{
     let chats = await Chat.find()
     console.log(chats);
