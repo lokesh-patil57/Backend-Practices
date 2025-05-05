@@ -34,8 +34,14 @@ app.post("/chats", (req, res) =>{
         msg : msg,
         created_at : new Date(),
     })
-    console.log(newChat);
-    res.send("working")
+    newChat.save().then((res)=>{
+        console.log("Data is saved")
+    })
+    .catch((err)=>{
+        console.log(err);
+        
+    })
+    res.redirect("/chats")
     
 })
 
