@@ -1,6 +1,6 @@
 body{
     margin: 20px;
-    background-color: antiquewhite;
+    background-color: #bdeaff;
 }
 .from{
     background-color: rgb(173 171 171);
@@ -25,4 +25,9 @@ body{
 }
 .res{
     text-align: right;
+}
+.btn{
+    display:flex;
+    gap: 10px;
+    padding-left: 450px;
 }
