@@ -13,6 +13,19 @@ const app = express();
 //   next();
 // });
 
+app.use("/api" , (req,res,next)=>{
+    let {token} = req.query
+    if (token=== "giveaccess") {
+        next()
+    }
+    res.send("ACCESS DENIED !!")
+
+})
+
+app.get("/api" , (req,res)=>{
+    res.send("Data")
+})
+
 app.use((req,res,next) =>{
     console.log(req.method , req.hostname , req.path);
     next()
