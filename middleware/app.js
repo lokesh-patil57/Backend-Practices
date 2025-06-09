@@ -1,17 +1,23 @@
 const express = require("express");
 const app = express();
 
-app.use((req, res, next) => {
-  console.log(`I am 1st middleware`);
+// app.use((req, res, next) => {
+//   console.log(`I am 1st middleware`);
 
-  next();
-});
+//   next();
+// });
 
-app.use((req, res , next) => {
-  console.log(`I am 2nd middleware`);
+// app.use((req, res , next) => {
+//   console.log(`I am 2nd middleware`);
 
-  next();
-});
+//   next();
+// });
+
+app.use((req,res,next) =>{
+    console.log(req.method , req.hostname , req.path);
+    next()
+    
+})
 
 app.get("/random", (req, res) => {
   res.send("I am Random");
