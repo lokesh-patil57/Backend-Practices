@@ -33,6 +33,8 @@ let posts = [
   },
 ];
 
+
+//New Route
 app.get("/posts", (req, res) => {
   res.render("index.ejs", { posts });
 });
@@ -40,6 +42,7 @@ app.get("/posts/new", (req, res) => {
   res.render("new.ejs");
 });
 
+//Show route
 app.get("/posts/:id", (req, res) => {
   let { id } = req.params;
   let post = posts.find((p) => id === p.id);
@@ -63,6 +66,7 @@ app.delete("/posts/:id" ,(req , res) =>{
     
 });
 
+//Edit Route
 app.get("/posts/:id/edit", (req, res) => {
   let { id } = req.params;
   let post = posts.find((p) => id === p.id);
