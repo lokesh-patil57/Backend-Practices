@@ -76,6 +76,12 @@ app.post("/posts", (req, res) => {
   res.redirect("/posts");
 });
 
+//Error Route
+app.use((err,req, res, next)=>{
+  let { status=500, message } = err
+  res.status(status).send(message)
+})
+
 app.listen(port, () => {
   console.log(`listening on port :${port}`);
   console.log(`Server running on http://localhost:${port}`);
