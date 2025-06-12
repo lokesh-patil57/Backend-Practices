@@ -97,7 +97,13 @@ app.get("/", (req, res) => {
   res.send("working");
 });
 
-//Error Route
+app.use((err,req,res,next) =>{
+  console.log(err.name);
+  next(err)
+  
+})
+
+//Error Handling Route
 app.use((err, req, res, next) => {
   let { status = 500, message } = err;
   res.status(status).send(message);
