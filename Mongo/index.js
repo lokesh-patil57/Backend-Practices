@@ -22,6 +22,19 @@ async function main() {
   await mongoose.connect("mongodb://127.0.0.1:27017/whatsapp");
 }
 
+function asyncwrap(fn) {
+  return function (req, res, next) {
+    fn(req, res, next).catch((err) => next(err));
+  };
+}
+
+// new - Show Route
+app.get("/chats/:id", asyncwrap(async (req, res, next) => {
+  let { id } = req.params;
+  let chat = await Chat.findById(id);
+  res.render("edit.ejs", { chat });
+}));
+
 //Edit Route
 app.get("/chats/:id/edit", async (req, res) => {
   try {
@@ -33,35 +46,37 @@ app.get("/chats/:id/edit", async (req, res) => {
   }
 });
 
-function asyncwrap(fn) {
-  return function (req, res, next ) {
-    fn(req, res , next).catch((err)=> next(err))
-  }
-}
+
 
 //Show route
-app.get("/chats/:id/show",asyncwrap( async(req,res)=>{
-    let {id}= req.params
-    let chat = await Chat.findById(id)
-    res.render("show.ejs",{chat}) 
-  
-}))
+// app.get("/chats/:id/show",asyncwrap( async(req,res)=>{
+//     let {id}= req.params
+//     let chat = await Chat.findById(id)
+//     res.render("show.ejs",{chat})
+
+// }))
 
 //new route
 app.get("/chats/new", (req, res) => {
+  throw new ExpressError(404,"Page not found!")
   res.render("newChat.ejs");
 });
 
 //Destroy Route
-app.delete("/chats/:id", asyncwrap( async (req, res) => {
+app.delete(
+  "/chats/:id",
+  asyncwrap(async (req, res) => {
     let { id } = req.params;
     let deletedChat = await Chat.findByIdAndDelete(id);
     console.log(deletedChat);
     res.render("/chats");
-}));
+  })
+);
 
 // Update Route
-app.put("/chats/:id", asyncwrap( async (req, res) => {
+app.put(
+  "/chats/:id",
+  asyncwrap(async (req, res) => {
     let { id } = req.params;
     let { msg: newmsg } = req.body;
     let updatedChat = await Chat.findByIdAndUpdate(
@@ -72,9 +87,12 @@ app.put("/chats/:id", asyncwrap( async (req, res) => {
     );
     console.log(updatedChat);
     res.redirect("/chats");
-}));
+  })
+);
 
-app.post("/chats", asyncwrap( async (req, res, next) => {
+app.post(
+  "/chats",
+  asyncwrap(async (req, res, next) => {
     let { from, to, msg } = req.body;
     let newChat = new Chat({
       from: from,
@@ -84,29 +102,32 @@ app.post("/chats", asyncwrap( async (req, res, next) => {
     });
     await newChat.save();
     res.redirect("/chats");
+  })
+);
 
-}));
-
-app.get("/chats", asyncwrap( async (req, res) => {
-  let chats = await Chat.find();
-  //   console.log(chats);
-  res.render("index.ejs", { chats });
-}));
+app.get(
+  "/chats",
+  asyncwrap(async (req, res) => {
+    let chats = await Chat.find();
+    //   console.log(chats);
+    res.render("index.ejs", { chats });
+  })
+);
 
 app.get("/", (req, res) => {
   res.send("working");
 });
 
-app.use((err,req,res,next) =>{
+app.use((err, req, res, next) => {
   console.log(err.name);
-  next(err)
-  
-})
+  next(err);
+});
 
 //Error Handling Route
 app.use((err, req, res, next) => {
-  let { status = 500, message } = err;
+  let { status = 500, message="some error" } = err;
   res.status(status).send(message);
+  
 });
 
 app.listen(8080, () => {
