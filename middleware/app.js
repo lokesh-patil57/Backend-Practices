@@ -2,17 +2,13 @@ const express = require("express");
 const app = express();
 const ExpressError = require("./ExpressError")
 
-// app.use((req, res, next) => {
-//   console.log(`I am 1st middleware`);
-
-//   next();
-// });
-
-// app.use((req, res , next) => {
-//   console.log(`I am 2nd middleware`);
-
-//   next();
-// });
+const checkToken = (req, res , next)=>{
+  let {token} = req.query;
+  if(token == "giveaccess") {
+    next();
+  }
+  throw new ExpressError(401 , "ACCESS DENIED!")
+}
 
 app.use("/api" , (req,res,next)=>{
     let {token} = req.query
@@ -50,7 +46,7 @@ app.get("/admin", (req , res)=>{
 })
 
 app.use((err,req, res, next)=>{
-  let { status=500, message } = err
+  let { status=500, message="Some Error" } = err
   res.status(status).send(message)
 })
 
