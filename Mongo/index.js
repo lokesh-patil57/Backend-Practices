@@ -29,11 +29,17 @@ function asyncwrap(fn) {
 }
 
 // new - Show Route
-app.get("/chats/:id", asyncwrap(async (req, res, next) => {
-  let { id } = req.params;
-  let chat = await Chat.findById(id);
-  res.render("edit.ejs", { chat });
-}));
+app.get(
+  "/chats/:id",
+  asyncwrap(async (req, res, next) => {
+    let { id } = req.params;
+    let chat = await Chat.findById(id);
+    if (!chat) {
+      next(new ExpressError(500, "chat not found!"));
+    }
+    res.render("edit.ejs", { chat });
+  })
+);
 
 //Edit Route
 app.get("/chats/:id/edit", async (req, res) => {
@@ -46,8 +52,6 @@ app.get("/chats/:id/edit", async (req, res) => {
   }
 });
 
-
-
 //Show route
 // app.get("/chats/:id/show",asyncwrap( async(req,res)=>{
 //     let {id}= req.params
@@ -58,7 +62,7 @@ app.get("/chats/:id/edit", async (req, res) => {
 
 //new route
 app.get("/chats/new", (req, res) => {
-  throw new ExpressError(404,"Page not found!")
+  throw new ExpressError(404, "Page not found!");
   res.render("newChat.ejs");
 });
 
@@ -125,9 +129,8 @@ app.use((err, req, res, next) => {
 
 //Error Handling Route
 app.use((err, req, res, next) => {
-  let { status = 500, message="some error" } = err;
+  let { status = 500, message = "some error" } = err;
   res.status(status).send(message);
-  
 });
 
 app.listen(8080, () => {
