@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -12,5 +12,43 @@
     <p>Message : <i><%=chat.msg%></i></p>
     <p><%= chat.created_at.toString().split(" ")[4] %></p>
     <p><%= chat.created_at.toString().split(" ").slice(0 , 4).join(" ") %></p>
+  </body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Your Chat</title>
+    <!-- Include your CSS -->
+    <link rel="stylesheet" href="/style.css" />
+    <link rel="stylesheet" href="/Chatbot.css" />
+  </head>
+  <body style="text-align: center">
+    <h3>Your Message</h3>
+    <p>From : <i><%= chat.from %></i></p>
+    <p>Received by <i><%= chat.to %></i></p>
+    <p>Message : <i><%= chat.msg %></i></p>
+    <p><%= chat.created_at.toString().split(" ")[4] %></p>
+    <p><%= chat.created_at.toString().split(" ").slice(0 , 4).join(" ") %></p>
+
+    <hr />
+
+    <!-- ✅ Chatbot Section (only visible in this page) -->
+    <div id="chatbot">
+      <h3>💬 Chatbot Session</h3>
+      <div class="chat-window" id="chat-window">
+        <p>👋 Hello! I’m your chatbot. Start chatting below.</p>
+      </div>
+
+      <div class="chat-input">
+        <input type="text" id="user-input" placeholder="Type your message..." />
+        <button id="send-btn">Send</button>
+      </div>
+    </div>
+
+    <!-- Include your JS -->
+    <script src="/Chatbot.js"></script>
   </body>
 </html>
